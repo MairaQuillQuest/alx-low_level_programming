@@ -1,4 +1,4 @@
-#include "algorithm.h"
+#include "main.h"
 
 /**
  * main - print Algorithm, followed by new line

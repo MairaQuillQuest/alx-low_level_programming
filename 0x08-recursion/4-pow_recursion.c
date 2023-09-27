@@ -1,36 +1,22 @@
 #include "main.h"
-/**
- * helper - helps decide if i'm right
- * @i: integer to guess
- * @n: integer to get root of
- * Return: value of root
- */
-int helper(int i, int n)
-{
-	int j;
 
-	if (i * i != n)
-	{
-		if (i > n)
-		{
-			return (-1);
-		}
-		j = helper(i + 1, n);
-		return (j + 1);
-	}
-	return (0);
-}
 /**
- * _sqrt_recursion - returns square root
- * @n: integer to return
- * Return: returns int of squareroot
+ * _pow_recursion - raise x to power y
+ * @x: number
+ * @y: power to raise to
+ * Return: power of a number, -1 if power less than 0
  */
-int _sqrt_recursion(int n)
-{
-	int i = 0;
 
-	if (helper(i, n) == n && n != 1)
+int _pow_recursion(int x, int y)
+{
+	if (y < 0)
 		return (-1);
-	return (helper(i, n));
 
+	if (x == 0)
+		return (0);
+
+	if (x == 1 || y == 0)
+		return (1);
+
+	return (x * _pow_recursion(x, y - 1));
 }

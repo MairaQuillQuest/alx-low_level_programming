@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 /**
- * helper - helps function
- * @word: wordcount
+ * helper - helper function
+ * @word: word count
  * @len: length
  * @str: string to go through
  * @s: array you are assigning
@@ -42,7 +42,7 @@ char **strtow(char *str)
 	int len, i, j, size, k, word;
 	char **s;
 
-	if (str == NULL || *str == '\0')
+	if (str == NULL || *str == '\0' || str[0] == ' ')
 		return (NULL);
 	len = 0;
 	word = 0;

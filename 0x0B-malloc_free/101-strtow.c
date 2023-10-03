@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 /**
  * helper - helps function
  * @word: wordcount
@@ -17,24 +18,20 @@ char **helper(int word, int len, char *str, char **s)
 	for (i = 0; i < word; i++)
 	{
 		k = 0;
-		for (; j < len; j++)
+		while (str[j] == ' ')
+			j++;
+		while (j < len && str[j] != ' ')
 		{
-			if (str[0] != ' ' || str[j] != ' ')
-			{
-				s[i][k] = str[j];
-				k++;
-			}
-			if (j != 0 && str[j] == ' ' && str[j - 1] != ' ')
-			{
-				j++;
-				break;
-			}
+			s[i][k] = str[j];
+			k++;
+			j++;
 		}
-		s[i][k + 1] = '\0';
+		s[i][k] = '\0';
 	}
-	s[word + 1] = NULL;
+	s[word] = NULL;
 	return (s);
 }
+
 /**
  * strtow - string to words
  * @str: string to check
@@ -45,41 +42,41 @@ char **strtow(char *str)
 	int len, i, j, size, k, word;
 	char **s;
 
-	if (str == NULL)
+	if (str == NULL || *str == '\0')
 		return (NULL);
 	len = 0;
 	word = 0;
 	while (str[len] != '\0')
 	{
-		if (str[0] != ' ')
-		word++;
-		if (str[len] != ' ' && str[len - 1] == ' ' && len != 0)
+		while (str[len] == ' ')
+			len++;
+		if (str[len] != '\0')
 			word++;
-		len++;
+		while (str[len] != ' ' && str[len] != '\0')
+			len++;
 	}
-	s = (char **)malloc(sizeof(char *) * word + 1);
+	s = (char **)malloc(sizeof(char *) * (word + 1));
 	if (s == NULL)
 		return (NULL);
 	j = 0;
 	for (i = 0; i < word; i++)
 	{
 		size = 0;
-		for (; j < len; j++)
+		while (str[j] == ' ')
+			j++;
+		while (j < len && str[j] != ' ')
 		{
-			if (str[0] != ' ' || str[j] != ' ')
-				size++;
-			if (str[j] == ' ' && size > 0)
-				break;
+			size++;
+			j++;
 		}
-		printf("%d\n", size);
-		s[i] = (char *)malloc(sizeof(char) * size + 1);
+		s[i] = (char *)malloc(sizeof(char) * (size + 1));
 		if (s[i] == NULL)
 		{
 			for (k = i - 1; k >= 0; k--)
 				free(s[k]);
 			free(s);
+			return (NULL);
 		}
 	}
-	s = helper(word, len, str, s);
-	return (s);
+	return (helper(word, len, str, s));
 }

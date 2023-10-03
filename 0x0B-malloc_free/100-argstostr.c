@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 /**
  * argstostr - gives array of args
  * @ac: argument count
@@ -24,10 +25,11 @@ char *argstostr(int ac, char **av)
 			size++;
 	}
 
-	size += (ac + 1);
+	size += ac + 1;
 	s = malloc(sizeof(char) * size);
 	if (s == NULL)
 		return (NULL);
+
 	k = 0;
 	for (i = 0; i < ac; i++)
 	{

@@ -1,6 +1,6 @@
 /*
  * File: 4-new_dog.c
- * Auth: Maira Wangui 
+ * Auth: Maira Wangui
  */
 
 #include "dog.h"

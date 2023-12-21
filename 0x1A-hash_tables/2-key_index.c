@@ -1,58 +1,21 @@
 /*
- * File: 3-hash_table_set.c
+ * File: 2-key_index.c
  * Auth: Maira Wangui
 */
 
 #include "hash_tables.h"
 
 /**
- * hash_table_set - Add or update an element in a hash table.
- * @ht: A pointer to the hash table.
- * @key: The key to add - cannot be an empty string.
- * @value: The value associated with key.
+ * key_index - Get the index at which a key/value pair should
+ *             be stored in array of a hash table.
+ * @key: The key to get the index of.
+ * @size: The size of the array of the hash table.
  *
- * Return: Upon failure - 0.
- *         Otherwise - 1.
+ * Return: The index of the key.
+ *
+ * Description: Uses the djb2 algorithm.
  */
-int hash_table_set(hash_table_t *ht, const char *key, const char *value)
+unsigned long int key_index(const unsigned char *key, unsigned long int size)
 {
-	hash_node_t *new;
-	char *value_copy;
-	unsigned long int index, i;
-
-	if (ht == NULL || key == NULL || *key == '\0' || value == NULL)
-		return (0);
-
-	value_copy = strdup(value);
-	if (value_copy == NULL)
-		return (0);
-
-	index = key_index((const unsigned char *)key, ht->size);
-	for (i = index; ht->array[i]; i++)
-	{
-		if (strcmp(ht->array[i]->key, key) == 0)
-		{
-			free(ht->array[i]->value);
-			ht->array[i]->value = value_copy;
-			return (1);
-		}
-	}
-
-	new = malloc(sizeof(hash_node_t));
-	if (new == NULL)
-	{
-		free(value_copy);
-		return (0);
-	}
-	new->key = strdup(key);
-	if (new->key == NULL)
-	{
-		free(new);
-		return (0);
-	}
-	new->value = value_copy;
-	new->next = ht->array[index];
-	ht->array[index] = new;
-
-	return (1);
+	return (hash_djb2(key) % size);
 }
